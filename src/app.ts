@@ -1,6 +1,10 @@
-import express, { Application, Request, Response } from 'express'
+import express, { Application, NextFunction, Request, Response } from 'express'
 import cors from 'cors'
-import { StudentRoutes } from './app/modules/students/student.route'
+import globalErrorHandler from './app/middleware/global.errorHandler'
+import notFound from './app/middleware/notFound'
+import router from './app/routes'
+import sendResponse from './app/utils/sendResponse'
+import httpStatus from 'http-status'
 
 const app: Application = express()
 
@@ -8,16 +12,20 @@ const app: Application = express()
 app.use(express.json())
 app.use(cors())
 
-//application routes
-app.use('/api/v1/students', StudentRoutes)
+app.use('/api/v1', router)
 
-const getAController = (req: Request, res: Response) => {
-  const a = 10
-  res.send(a)
+//default-routes
+const defaultRoutes = (req: Request, res: Response, next: NextFunction) => {
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'website is running',
+    data: 'welcome to pH University',
+  })
 }
+app.get('/', defaultRoutes)
 
-app.get('/', getAController)
+app.use(notFound)
+app.use(globalErrorHandler)
 
 export default app
-
-//console.log(process.cwd());
