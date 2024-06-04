@@ -13,8 +13,11 @@ router.post(
   AcademicSemesterController.createAcademicSemester,
 )
 
+// router.get(
+//   'academic-semester/:semesterId',
+//   AcademicSemesterController.getSingleAcademicSemester,
+// )
 router.get('/:semesterId', AcademicSemesterController.getSingleAcademicSemester)
-
 router.patch(
   '/:semesterId',
   validateRequest(

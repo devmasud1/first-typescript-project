@@ -4,7 +4,6 @@ import {
   AcademicSemesterName,
   Months,
 } from './academicSemester.constant'
-import { string } from 'joi'
 
 const createAcademicSemesterValidationSchema = z.object({
   body: z.object({

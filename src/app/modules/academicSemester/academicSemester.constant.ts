@@ -27,7 +27,7 @@ export const Months: TMonths[] = [
   'December',
 ]
 
-export const academicSemesterNameAndCodeMapper: TAcademicSemesterNameAndCodeMapper =
+export const AcademicSemesterNameAndCodeMapper: TAcademicSemesterNameAndCodeMapper =
   {
     Autumn: '01',
     Summer: '02',

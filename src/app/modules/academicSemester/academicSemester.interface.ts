@@ -25,5 +25,4 @@ export type TAcademicSemester = {
   year: String
   startMonth: TMonths
   endMonth: TMonths
-  TAcademicSemesterNameAndCodeMapper
 }
