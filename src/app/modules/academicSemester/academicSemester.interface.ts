@@ -15,10 +15,15 @@ export type TMonths =
 export type TAcademicSemesterName = 'Autumn' | 'Summer' | 'Fall'
 export type TAcademicSemesterCode = '01' | '02' | '03'
 
+export type TAcademicSemesterNameAndCodeMapper = {
+  [key: string]: string
+}
+
 export type TAcademicSemester = {
   name: TAcademicSemesterName
   code: TAcademicSemesterCode
   year: String
   startMonth: TMonths
   endMonth: TMonths
+  TAcademicSemesterNameAndCodeMapper
 }

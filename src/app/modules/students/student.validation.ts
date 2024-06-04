@@ -81,6 +81,7 @@ const createStudentValidationSchema = z.object({
       guardians: guardiansValidationSchema,
 
       localGuardian: localGuardianValidationSchema,
+      admissionSemester: z.string(),
       profileImage: z.string().trim().optional(),
     }),
   }),

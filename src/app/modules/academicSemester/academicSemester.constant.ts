@@ -2,6 +2,7 @@ import {
   TAcademicSemesterCode,
   TAcademicSemesterName,
   TMonths,
+  TAcademicSemesterNameAndCodeMapper,
 } from './academicSemester.interface'
 
 export const AcademicSemesterName: TAcademicSemesterName[] = [
@@ -25,3 +26,10 @@ export const Months: TMonths[] = [
   'November',
   'December',
 ]
+
+export const academicSemesterNameAndCodeMapper: TAcademicSemesterNameAndCodeMapper =
+  {
+    Autumn: '01',
+    Summer: '02',
+    Fall: '03',
+  }
