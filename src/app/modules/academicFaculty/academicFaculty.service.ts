@@ -1,3 +1,4 @@
+import AppError from '../../error/appError'
 import { TAcademicFaculty } from './academicFaculty.interface'
 import { AcademicFaculty } from './academicFaculty.model'
 
@@ -13,6 +14,10 @@ const getAllAcademicFacultiesFromDB = async () => {
 
 const getSingleAcademicFacultyFromDB = async (id: string) => {
   const result = await AcademicFaculty.findById(id)
+
+  if (!result) {
+    throw new AppError(404, 'This faculty does not exist!')
+  }
   return result
 }
 

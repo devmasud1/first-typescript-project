@@ -27,7 +27,7 @@ const getAllAcademicDepartment = catchAsync(async (req, res) => {
   })
 })
 
-const getSingleAcademicDepartment = catchAsync(async (req, res) => {
+const getSingleAcademicDepartment = catchAsync(async (req, res, next) => {
   const { departmentId } = req.params
 
   const result =
@@ -38,7 +38,7 @@ const getSingleAcademicDepartment = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic department is retrieved successfully',
+    message: 'Academic department retrieved successfully!',
     data: result,
   })
 })

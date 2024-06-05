@@ -2,6 +2,7 @@ import httpStatus, { OK } from 'http-status'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { AcademicFacultyServices } from './academicFaculty.service'
+import AppError from '../../error/appError'
 
 const createAcademicFaculty = catchAsync(async (req, res) => {
   const result = await AcademicFacultyServices.createAcademicFacultyIntoDB(

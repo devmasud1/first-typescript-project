@@ -1,24 +1,26 @@
 import { Student } from './student.model'
-import { TStudent } from './student.interface'
-
-// const createStudentIntoDB = async (studentData: TStudent) => {
-//   if (await Student.isUserExits(studentData.id)) {
-//     throw new Error('user already exists')
-//   }
-
-//   const result = await Student.create(studentData) //build in static method
-
-//   // const result = await student.save() //build in instance method
-//   return result
-// }
 
 const getAllStudentsFromDB = async () => {
   const result = await Student.find()
+    .populate('admissionSemester')
+    .populate({
+      path: 'academicDepartment',
+      populate: {
+        path: 'academicFaculty',
+      },
+    })
   return result
 }
 const getSingleStudentsFromDB = async (id: string) => {
-  // const result = await Student.findOne({ id })
-  const result = await Student.aggregate([{ $match: { id: id } }])
+  const result = await Student.findOne({ id })
+    .populate('admissionSemester')
+    .populate({
+      path: 'academicDepartment',
+      populate: {
+        path: 'academicFaculty',
+      },
+    })
+  // const result = await Student.aggregate([{ $match: { id: id } }])
   return result
 }
 
