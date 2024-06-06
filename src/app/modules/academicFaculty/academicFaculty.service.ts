@@ -1,3 +1,4 @@
+import httpStatus from 'http-status'
 import AppError from '../../error/appError'
 import { TAcademicFaculty } from './academicFaculty.interface'
 import { AcademicFaculty } from './academicFaculty.model'
@@ -16,7 +17,7 @@ const getSingleAcademicFacultyFromDB = async (id: string) => {
   const result = await AcademicFaculty.findById(id)
 
   if (!result) {
-    throw new AppError(404, 'This faculty does not exist!')
+    throw new AppError(httpStatus.BAD_REQUEST, 'This faculty does not exist!')
   }
   return result
 }
