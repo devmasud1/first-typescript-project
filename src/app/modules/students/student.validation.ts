@@ -87,4 +87,60 @@ const createStudentValidationSchema = z.object({
   }),
 })
 
-export default createStudentValidationSchema
+const updateStudentValidationSchema = z.object({
+  body: z
+    .object({
+      student: z
+        .object({
+          name: userNameValidationSchema.partial(),
+          gender: z
+            .enum(['male', 'female', 'other'], {
+              errorMap: () => ({ message: 'Gender is not valid.' }),
+            })
+            .optional(),
+          dateOfBirth: z.string().trim().optional(),
+          email: z
+            .string()
+            .trim()
+            .email('Email is not valid.')
+            .max(100, 'Email cannot exceed 100 characters.')
+            .optional(),
+          contactNo: z
+            .string()
+            .trim()
+            .max(15, 'Contact number cannot exceed 15 characters.')
+            .optional(),
+          emergencyContactNo: z
+            .string()
+            .trim()
+            .max(15, 'Emergency contact number cannot exceed 15 characters.')
+            .optional(),
+          bloodGroup: z
+            .enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'], {
+              errorMap: () => ({ message: 'Blood group is not valid.' }),
+            })
+            .optional(),
+          presentAddress: z
+            .string()
+            .trim()
+            .max(100, 'Present address cannot exceed 100 characters.')
+            .optional(),
+          permanentAddress: z
+            .string()
+            .trim()
+            .max(100, 'Permanent address cannot exceed 100 characters.')
+            .optional(),
+          guardians: guardiansValidationSchema.partial(),
+          localGuardian: localGuardianValidationSchema.partial(),
+          admissionSemester: z.string().optional(),
+          profileImage: z.string().trim().optional(),
+        })
+        .partial(),
+    })
+    .partial(),
+})
+
+export const studentValidation = {
+  createStudentValidationSchema,
+  updateStudentValidationSchema,
+}
