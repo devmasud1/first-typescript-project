@@ -5,8 +5,32 @@ import httpStatus from 'http-status'
 import { User } from '../user/user.model'
 import { TStudent } from './student.interface'
 
-const getAllStudentsFromDB = async () => {
-  const result = await Student.find()
+const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
+  //{email : {$regex: query.search, $option: i}}
+
+  const queryObj = { ...query } //copy
+
+  const studentSearchAbleField = ['email', 'name.firstName', 'presentAddress']
+
+  let searchTerm = ''
+
+  if (query?.searchTerm) {
+    searchTerm = query?.searchTerm as string
+  }
+
+  const searchQuery = Student.find({
+    $or: studentSearchAbleField.map(field => ({
+      [field]: { $regex: searchTerm, $options: 'i' },
+    })),
+  })
+
+  //filtering
+  const excludeFields = ['searchTerm', 'sort', 'limit']
+
+  excludeFields.forEach(ele => delete queryObj[ele])
+
+  const filterQuery = searchQuery
+    .find(queryObj)
     .populate('admissionSemester')
     .populate({
       path: 'academicDepartment',
@@ -14,7 +38,26 @@ const getAllStudentsFromDB = async () => {
         path: 'academicFaculty',
       },
     })
-  return result
+
+  //sort
+  let sort = '-createdAt'
+
+  if (query?.sort) {
+    sort = query?.sort as string
+  }
+
+  const sortQuery = filterQuery.sort(sort)
+
+  //limit
+  let limit = 1
+
+  if (query?.limit) {
+    limit = query?.limit as number
+  }
+
+  const limitQuery = await sortQuery?.limit(limit)
+
+  return limitQuery
 }
 const getSingleStudentsFromDB = async (id: string) => {
   const result = await Student.findOne({ id })
@@ -101,10 +144,10 @@ const deleteStudentsFromDB = async (id: string) => {
     await session.endSession()
 
     return deletedStudent
-  } catch (err) {
+  } catch (err: any) {
     await session.abortTransaction()
     await session.endSession()
-    throw new Error('Failed to delete student')
+    throw new Error(err)
   }
 }
 
