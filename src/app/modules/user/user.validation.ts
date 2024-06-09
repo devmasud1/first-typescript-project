@@ -5,7 +5,8 @@ const userValidationSchema = z.object({
     .string({
       invalid_type_error: 'Password must be string',
     })
-    .max(20, { message: 'Password can not more then 20 characters' }),
+    .max(20, { message: 'Password can not more then 20 characters' })
+    .optional(),
 
   status: z.enum(['in-progress', 'blocked']).default('in-progress'),
 })
